@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Giao Diện Giỏ Hàng</title>
+  </head>
+  <body>
+    <div class="cart-container">
+      <div class="cart-item"></div>
+      <div class="order-summary">
+        <h3>Tóm tắt đơn hàng</h3>
+        <p>Tổng thành tiền: <span class="total-price"> </span></p>
+        <p>Phí vận chuyển: <strong style="color: red">Free Ship</strong></p>
+        <p>
+          Thông tin vận chuyển: Sản phẩm sẽ được Hoàng Hoan giao trong vòng 2-7
+          ngày. Chi tiết liên hệ 0978 611 889
+        </p>
+        <p>Tổng tiền: <span class="total-price"> </span></p>
+        <div class="order-actions">
+          <button>Đặt hàng ngay</button>
+          <button>Tiếp tục mua hàng</button>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      const product = [
+        {
+          id: 1,
+          title: "Giường Châu Âu",
+          image: "https://via.placeholder.com/80",
+          price: 22999900,
+          qty: 1,
+          thanhtien: 22999900,
+        },
+        {
+          id: 2,
+          title: "Cầu thang",
+          image: "https://via.placeholder.com/80",
+          price: 30000000,
+          qty: 1,
+          thanhtien: 30000000,
+        },
+      ];
+      $(document).ready(function () {
+        // Hàm tính tổng tiền
+        function calculateTotal() {
+          let total = 0;
+
+          // Tính tổng từ các thành tiền của sản phẩm
+          $(".cart-item .total-price").each(function () {
+            let price = parseInt($(this).text().replace(/\D/g, "")); 
+            if (!isNaN(price)) {
+              total += price;
+            }
+          });
+
+          // Cập nhật tổng tiền trong phần Tóm tắt đơn hàng với định dạng VND
+          $(".order-summary .total-price").text(
+            total.toLocaleString("vi-VN") + " VND"
+          );
+        }
+
+        // Render sản phẩm
+        product.forEach(function (product) {
+          var productDiv = `
+           <div class="item" data-id="${product.id}">
+            <img src="${product.image}" alt="${product.title}">
+            <div class="item-info">
+                <h3>${product.title}</h3>
+                <div class="quantity">
+                    <button class="minus-btn">-</button>
+                    <input type="number" value="${product.qty}" min="1" class="qty-input" style="width: 40px; text-align: center; border: 2px solid black;">
+                    <button class="plus-btn">+</button>
+                </div>
+                <p>Giá: <span class="price">${product.price}</span></p>
+                <p>Thành tiền: <span class="total-price">${product.thanhtien}</span></p>
+            </div>
+            <div class="item-actions">
+                <span class="remove-item">X</span>
+                <button class="update-btn">Cập nhật</button>
+            </div>
+        </div>
+        `;
+          $(".cart-item").append(productDiv);
+        });
+        // Xử lý khi nhấn nút X để xóa sản phẩm
+        $(".cart-item").on("click", ".remove-item", function () {
+          let $item = $(this).closest(".item");
+          $item.remove(); // Xóa phần tử sản phẩm khỏi DOM
+
+          // Tính lại tổng tiền sau khi xóa
+          calculateTotal();
+        });
+        // Xử lý khi nhấn nút Cập nhật
+        $(".cart-item").on("click", ".update-btn", function () {
+          let $item = $(this).closest(".item");
+          let id = $item.data("id");
+          let newQty = parseInt($item.find(".qty-input").val());
+
+          // Tìm sản phẩm trong mảng và cập nhật số lượng
+          let productToUpdate = product.find((p) => p.id == id);
+          if (productToUpdate) {
+            productToUpdate.qty = newQty;
+            productToUpdate.thanhtien = newQty * productToUpdate.price;
+          }
+        });
+
+        // Xử lý khi nhấn nút "+" hoặc "-"
+        $(".cart-item").on("click", ".plus-btn, .minus-btn", function () {
+          let $item = $(this).closest(".item");
+          let qtyInput = $item.find(".qty-input");
+          let qty = parseInt(qtyInput.val());
+          let price = parseInt($item.find(".price").text());
+
+          if ($(this).hasClass("plus-btn")) {
+            qty++;
+          } else if ($(this).hasClass("minus-btn") && qty > 1) {
+            qty--;
+          }
+
+          qtyInput.val(qty);
+
+          // Cập nhật thành tiền cho từng sản phẩm
+          let thanhtien = qty * price;
+          $item.find(".total-price").text(thanhtien);
+
+          // Tính lại tổng tiền
+          calculateTotal();
+        });
+
+        // Gọi tính tổng tiền khi trang tải
+        calculateTotal();
+      });
+    </script>
+  </body>
+</html>

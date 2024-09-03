@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giao diện sản phẩm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #bbbbbb;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            max-width: 1200px;
+            width: 100%;
+        }
+        .product {
+            background-color: #fff;
+            overflow: hidden;
+            text-align: center;
+            padding: 10px 12px;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ddd;
+        }
+        .product h3 {
+            font-size: 18px;
+            margin: 10px 0;
+            color: rgb(14, 14, 115);
+        }
+        .product p {
+            font-size: 16px;
+            margin: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- <div class="product">
+            <img src="https://via.placeholder.com/200" alt="Bàn tiếp khách">
+            <h3>Bàn tiếp khách</h3>
+            <p>Giá: 9.999.000₫</p>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/200" alt="Bàn uống nước 1">
+            <h3>Bàn uống nước 1</h3>
+            <p>Giá: 8.999.000₫</p>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/200" alt="Giường hộp">
+            <h3>Giường hộp</h3>
+            <p>Giá: 8.999.000₫</p>
+        </div> -->
+        <!-- Thêm các sản phẩm khác theo cấu trúc tương tự -->
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    var data = [
+  {
+    "id": 8,
+    "cid": 7,
+    "code": "P001",
+    "title": "Bàn tiếp khách",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n",
+    "content": "<p>B&agrave;n tiếp kh&aacute;ch</p>\n",
+    "image": "https://via.placeholder.com/200",
+    "metaTitle": "Bàn tiếp khách",
+    "metaKeyword": "Bàn tiếp khách",
+    "metaDescription": "Bàn tiếp khách",
+    "slug": "ban-tiep-khach",
+    "priceOld": 12999000,
+    "priceNew": 9999000,
+    "size": "Size vừa",
+    "views": 0,
+    "likes": 0,
+    "star": null,
+    "home": 0,
+    "hot": null,
+    "createdDate": "2020-07-27T00:00:00",
+    "updatedDate": "2020-07-27T17:27:50.89",
+    "adminCreated": "4",
+    "adminUpdated": "4",
+    "status": 1,
+    "isdelete": null
+  },
+  {
+    "id": 9,
+    "cid": 7,
+    "code": "P002",
+    "title": "Ghế sofa",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n",
+    "content": "<p>Ghế sofa cao cấp</p>\n",
+    "image": "https://via.placeholder.com/200",
+    "metaTitle": "Ghế sofa",
+    "metaKeyword": "Ghế sofa",
+    "metaDescription": "Ghế sofa",
+    "slug": "ghe-sofa",
+    "priceOld": 15999000,
+    "priceNew": 11999000,
+    "size": "Size lớn",
+    "views": 0,
+    "likes": 0,
+    "star": null,
+    "home": 0,
+    "hot": null,
+    "createdDate": "2020-08-01T00:00:00",
+    "updatedDate": "2020-08-01T17:27:50.89",
+    "adminCreated": "4",
+    "adminUpdated": "4",
+    "status": 1,
+    "isdelete": null
+  },
+  {
+    "id": 10,
+    "cid": 7,
+    "code": "P003",
+    "title": "Kệ tivi",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n",
+    "content": "<p>Kệ tivi hiện đại</p>\n",
+    "image": "https://via.placeholder.com/200",
+    "metaTitle": "Kệ tivi",
+    "metaKeyword": "Kệ tivi",
+    "metaDescription": "Kệ tivi",
+    "slug": "ke-tivi",
+    "priceOld": 8999000,
+    "priceNew": 6999000,
+    "size": "Size nhỏ",
+    "views": 0,
+    "likes": 0,
+    "star": null,
+    "home": 0,
+    "hot": null,
+    "createdDate": "2020-08-05T00:00:00",
+    "updatedDate": "2020-08-05T17:27:50.89",
+    "adminCreated": "4",
+    "adminUpdated": "4",
+    "status": 1,
+    "isdelete": null
+  },
+  {
+    "id": 11,
+    "cid": 7,
+    "code": "P004",
+    "title": "Tủ sách",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n",
+    "content": "<p>Tủ sách gỗ</p>\n",
+    "image": "https://via.placeholder.com/200",
+    "metaTitle": "Tủ sách",
+    "metaKeyword": "Tủ sách",
+    "metaDescription": "Tủ sách",
+    "slug": "tu-sach",
+    "priceOld": 10999000,
+    "priceNew": 8999000,
+    "size": "Size lớn",
+    "views": 0,
+    "likes": 0,
+    "star": null,
+    "home": 0,
+    "hot": null,
+    "createdDate": "2020-08-10T00:00:00",
+    "updatedDate": "2020-08-10T17:27:50.89",
+    "adminCreated": "4",
+    "adminUpdated": "4",
+    "status": 1,
+    "isdelete": null
+  },
+  {
+    "id": 12,
+    "cid": 7,
+    "code": "P005",
+    "title": "Bàn trà",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n",
+    "content": "<p>Bàn trà nhỏ xinh</p>\n",
+    "image": "https://via.placeholder.com/200",
+    "metaTitle": "Bàn trà",
+    "metaKeyword": "Bàn trà",
+    "metaDescription": "Bàn trà",
+    "slug": "ban-tra",
+    "priceOld": 4999000,
+    "priceNew": 3999000,
+    "size": "Size nhỏ",
+    "views": 0,
+    "likes": 0,
+    "star": null,
+    "home": 0,
+    "hot": null,
+    "createdDate": "2020-08-15T00:00:00",
+    "updatedDate": "2020-08-15T17:27:50.89",
+    "adminCreated": "4",
+    "adminUpdated": "4",
+    "status": 1,
+    "isdelete": null
+  },
+  {
+    "id": 13,
+    "cid": 7,
+    "code": "P006",
+    "title": "Đèn trang trí",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n",
+    "content": "<p>Đèn trang trí phòng khách</p>\n",
+    "image": "https://via.placeholder.com/200",
+    "metaTitle": "Đèn trang trí",
+    "metaKeyword": "Đèn trang trí",
+    "metaDescription": "Đèn trang trí",
+    "slug": "den-trang-tri",
+    "priceOld": 2999000,
+    "priceNew": 1999000,
+    "size": "Size vừa",
+    "views": 0,
+    "likes": 0,
+    "star": null,
+    "home": 0,
+    "hot": null,
+    "createdDate": "2020-08-20T00:00:00",
+    "updatedDate": "2020-08-20T17:27:50.89",
+    "adminCreated": "4",
+    "adminUpdated": "4",
+    "status": 1,
+    "isdelete": null
+  },
+  {
+    "id": 14,
+    "cid": 7,
+    "code": "P007",
+    "title": "Thảm trải sàn",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n",
+    "content": "<p>Thảm trải sàn phòng khách</p>\n",
+    "image": "https://via.placeholder.com/200",
+    "metaTitle": "Thảm trải sàn",
+    "metaKeyword": "Thảm trải sàn",
+    "metaDescription": "Thảm trải sàn",
+    "slug": "tham-trai-san",
+    "priceOld": 6999000,
+    "priceNew": 4999000,
+    "size": "Size lớn",
+    "views": 0,
+    "likes": 0,
+    "star": null,
+    "home": 0,
+    "hot": null,
+    "createdDate": "2020-08-25T00:00:00",
+    "updatedDate": "2020-08-25T17:27:50.89",
+    "adminCreated": "4",
+    "adminUpdated": "4",
+    "status": 1,
+    "isdelete": null
+  },
+  {
+    "id": 15,
+    "cid": 7,
+    "code": "P008",
+    "title": "Rèm cửa",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n",
+    "content": "<p>Rèm cửa sổ</p>\n",
+    "image": "https://via.placeholder.com/200",
+    "metaTitle": "Rèm cửa",
+    "metaKeyword": "Rèm cửa",
+    "metaDescription": "Rèm cửa",
+    "slug": "rem-cua",
+    "priceOld": 3999000,
+    "priceNew": 2999000,
+    "size": "Size vừa",
+    "views": 0,
+    "likes": 0,
+    "star": null,
+    "home": 0,
+    "hot": null,
+    "createdDate": "2020-08-30T00:00:00",
+    "updatedDate": "2020-08-30T17:27:50.89",
+    "adminCreated": "4",
+    "adminUpdated": "4",
+    "status": 1,
+    "isdelete": null
+  },
+  {
+    "id": 16,
+    "cid": 7,
+    "code": "P009",
+    "title": "Bàn làm việc",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n",
+    "content": "<p>Bàn làm việc gỗ tự nhiên</p>\n",
+    "image": "https://via.placeholder.com/200",
+    "metaTitle": "Bàn làm việc",
+    "metaKeyword": "Bàn làm việc",
+    "metaDescription": "Bàn làm việc",
+    "slug": "ban-lam-viec",
+    "priceOld": 11999000,
+    "priceNew": 9999000,
+    "size": "Size lớn",
+    "views": 0,
+    "likes": 0,
+    "star": null,
+    "home": 0,
+    "hot": null,
+    "createdDate": "2020-09-05T00:00:00",
+    "updatedDate": "2020-09-05T17:27:50.89",
+    "adminCreated": "4",
+    "adminUpdated": "4",
+    "status": 1,
+    "isdelete": null
+  },
+  {
+    "id": 17,
+    "cid": 7,
+    "code": "P010",
+    "title": "Kệ giày",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n",
+    "content": "<p>Kệ giày đa năng</p>\n",
+    "image": "https://via.placeholder.com/200",
+    "metaTitle": "Kệ giày",
+    "metaKeyword": "Kệ giày",
+    "metaDescription": "Kệ giày",
+    "slug": "ke-giay",
+    "priceOld": 5999000,
+    "priceNew": 4999000,
+    "size": "Size vừa",
+    "views": 0,
+    "likes": 0,
+    "star": null,
+    "home": 0,
+    "hot": null,
+    "createdDate": "2020-09-10T00:00:00",
+    "updatedDate": "2020-09-10T17:27:50.89",
+    "adminCreated": "4",
+    "adminUpdated": "4",
+    "status": 1,
+    "isdelete": null
+  },
+  {
+    "id": 18,
+    "cid": 7,
+    "code": "P011",
+    "title": "Bàn học sinh",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n",
+    "content": "<p>Bàn học sinh tiện lợi</p>\n",
+    "image": "https://via.placeholder.com/200",
+    "metaTitle": "Bàn học sinh",
+    "metaKeyword": "Bàn học sinh",
+    "metaDescription": "Bàn học sinh",
+    "slug": "ban-hoc-sinh",
+    "priceOld": 7999000,
+    "priceNew": 5999000,
+    "size": "Size vừa",
+    "views": 0,
+    "likes": 0,
+    "star": null,
+    "home": 0,
+    "hot": null,
+    "createdDate": "2020-09-15T00:00:00",
+    "updatedDate": "2020-09-15T17:27:50.89",
+    "adminCreated": "4",
+    "adminUpdated": "4",
+    "status": 1,
+    "isdelete": null
+  },
+  {
+    "id": 19,
+    "cid": 7,
+    "code": "P012",
+    "title": "Ghế xoay văn phòng",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n",
+    "content": "<p>Ghế xoay văn phòng cao cấp</p>\n",
+    "image": "https://via.placeholder.com/200",
+    "metaTitle": "Ghế xoay văn phòng",
+    "metaKeyword": "Ghế xoay văn phòng",
+    "metaDescription": "Ghế xoay văn phòng",
+    "slug": "ghe-xoay-van-phong",
+    "priceOld": 4999000,
+    "priceNew": 3499000,
+    "size": "Size lớn",
+    "views": 0,
+    "likes": 0,
+    "star": null,
+    "home": 0,
+    "hot": null,
+    "createdDate": "2020-09-20T00:00:00",
+    "updatedDate": "2020-09-20T17:27:50.89",
+    "adminCreated": "4",    
+    "adminUpdated": "4",
+    "status": 1,
+    "isdelete": null
+  },
+  
+];
+$(document).ready(function() {
+   
+    data.forEach(function(product) {
+        var productDiv = `
+            <div class="product">
+                <img src="${product.image}" alt="${product.title}">
+                <h3>${product.title}</h3>
+                <p>Giá: ${product.priceNew.toLocaleString('vi-VN')}<sup style="color: red; font-size: 1.2em">₫</sup></p>
+            </div>
+        `;
+        $('.container').append(productDiv);
+    });
+});
+</script>
+</html>

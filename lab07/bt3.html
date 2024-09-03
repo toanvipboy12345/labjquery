@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Gallery</title>
+    <style>
+      .main {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      #image img {
+        width: 100%;
+        max-height: 600px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .thum {
+        margin-top: 10px;
+      }
+
+      .thum ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .thum ul li {
+        display: inline-block;
+      }
+
+      .thum ul li a img {
+        width: 120px;
+        height: 80px;
+        object-fit: cover;
+        border: solid 2px #ccc;
+        border-radius: 4px;
+      }
+
+      .activated {
+        border: solid 2px red !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div id="image">
+        <img src="./img/01.png" alt="Main Image" />
+      </div>
+      <div class="thum">
+        <ul>
+          <li>
+            <a href="javascript:void(0)">
+              <img src="./img/01.png" alt="Thumbnail 1" />
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <img src="./img/02.jpg" alt="Thumbnail 2" />
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <img src="./img/03.jpg" alt="Thumbnail 3" />
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <img src="./img/04.jpg" alt="Thumbnail 4" />
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <img src="./img/05.jpg" alt="Thumbnail 5" />
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <img src="./img/06.jpg" alt="Thumbnail 6" />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function () {
+            $(".thum a > img").click(function (event) {
+                var imgSrc = $(this).attr("src");  // Lấy giá trị của thuộc tính 'src' từ hình ảnh được click
+                $("#image > img").attr("src", imgSrc);  // Đặt hình ảnh lớn có 'src' giống với hình ảnh thumbnail được click
+                
+                $(".thum a > img").removeClass("activated");  // Loại bỏ lớp 'activated' khỏi tất cả các hình ảnh thumbnail
+                $(this).addClass("activated");  // Thêm lớp 'activated' vào hình ảnh thumbnail vừa được click
+            });
+        });
+        
+    </script>
+  </body>
+</html>

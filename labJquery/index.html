@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .student-list, .student-info {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .student-list {
+            flex: 2;
+        }
+        .student-info {
+            flex: 1;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(57, 26, 166);
+            cursor: pointer;
+            color: #f0f0f0;
+            margin: 5px;
+            white-space: nowrap;
+        }
+        .view-btn { background-color: #f39c12; }
+        .edit-btn { background-color: #3498db; }
+        .delete-btn { background-color: #e74c3c; }
+        .button { text-align: center; }
+        .button .save-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2c3e50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .save-btn:hover {
+            background-color: #34495e;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input[type="text"]::placeholder, input[type="number"]::placeholder {
+            color: #aaa;
+            box-sizing: border-box;
+        }
+        .actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .seacrh {
+            display: flex;
+            align-items: center;
+            width: 400px;
+        }
+        #search-input {
+            margin-right: 4px; 
+            padding: 5px; 
+        }
+        #sort-select {
+            margin-left: 10px; /* Space between sort button and dropdown */
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="student-list">
+            <div class="actions">
+                <button id="add-student-btn">Thêm mới sinh viên</button>
+                <div class="search">
+                    <input type="text" id="search-input" placeholder="Tìm kiếm tên sinh viên">
+                    <button id="search-btn">Tìm kiếm</button>
+                </div>
+                <div class="sort-container">
+                    <button id="sort">Sắp xếp</button>
+                    <select id="sort-select">
+                        <option value="">Chọn tiêu chí</option>
+                        <option value="name">Tên sinh viên</option>
+                        <option value="age">Tuổi</option>
+                        <option value="birthDate">Ngày sinh</option>
+                    </select>
+                </div>
+            </div>
+            <h2>Danh Sách Sinh Viên</h2>
+            <table id="student-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Mã sinh viên</th>
+                        <th>Tên sinh viên</th>
+                        <th>Tuổi</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="student-info">
+            <h2>Thông Tin Sinh Viên</h2>
+            <form id="student-form">
+                <input type="text" id="student-id" placeholder="Mã sinh viên">
+                <input type="text" id="student-name" placeholder="Tên sinh viên">
+                <input type="number" id="student-age" placeholder="Tuổi">
+                <input type="text" id="student-sex" placeholder="Giới tính">
+                <input type="text" id="student-birthdate" placeholder="Ngày sinh">
+                <input type="text" id="student-birthplace" placeholder="Nơi sinh">
+                <input type="text" id="student-address" placeholder="Địa chỉ">
+                <div class="button"><button type="submit" class="save-btn">Lưu</button></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            let students = [
+                { studentId: "SV001", studentName: "Nguyễn Văn A", age: 20, sex: true, birthDate: "2002-04-23", birthPlace: "HN", address: "25, Vũ Ngọc Phan" },
+                { studentId: "SV002", studentName: "Nguyễn Văn B", age: 21, sex: false, birthDate: "2001-09-09", birthPlace: "ĐN", address: "1, Ngô Quyền" },
+                { studentId: "SV003", studentName: "Nguyễn Văn C", age: 19, sex: true, birthDate: "2003-07-07", birthPlace: "HCM", address: "1, Lý Tự Trọng" },
+                { studentId: "SV004", studentName: "Nguyễn Văn D", age: 29, sex: false, birthDate: "2005-07-07", birthPlace: "HCM", address: "1, Lý Tự Trọng" }
+            ];
+
+            let editIndex = null;
+
+            const $tableBody = $('#student-table tbody');
+
+            const updateTable = (filter = '') => {
+                $tableBody.empty();
+                students
+                    .filter(student => student.studentName.toLowerCase().includes(filter.toLowerCase()))
+                    .forEach((student, index) => {
+                        const row = `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${student.studentId}</td>
+                                <td>${student.studentName}</td>
+                                <td>${student.age}</td>
+                                <td>${student.birthDate}</td>
+                                <td>${student.sex ? 'Nam' : 'Nữ'}</td>
+                                <td>
+                                    <button class="view-btn">Xem</button>
+                                    <button class="edit-btn" data-index="${index}">Sửa</button>
+                                    <button class="delete-btn" data-index="${index}">Xóa</button>
+                                </td>
+                            </tr>
+                        `;
+                        $tableBody.append(row);
+                    });
+            };
+
+            $('#student-form').submit(function(e) {
+                e.preventDefault();
+                const newStudent = {
+                    studentId: $('#student-id').val(),
+                    studentName: $('#student-name').val(),
+                    age: parseInt($('#student-age').val()),
+                    sex: $('#student-sex').val().toLowerCase() === 'nam',
+                    birthDate: $('#student-birthdate').val(),
+                    birthPlace: $('#student-birthplace').val(),
+                    address: $('#student-address').val()
+                };
+
+                if (editIndex !== null) {
+                    students[editIndex] = newStudent;
+                    editIndex = null;
+                } else {
+                    students.push(newStudent);
+                }
+
+                updateTable();
+                this.reset();
+            });
+
+            $tableBody.on('click', '.delete-btn', function() {
+                const index = $(this).data('index');
+                students.splice(index, 1);
+                updateTable();
+            });
+
+            $tableBody.on('click', '.edit-btn', function() {
+                editIndex = $(this).data('index');
+                const student = students[editIndex];
+                $('#student-id').val(student.studentId);
+                $('#student-name').val(student.studentName);
+                $('#student-age').val(student.age);
+                $('#student-sex').val(student.sex ? 'Nam' : 'Nữ');
+                $('#student-birthdate').val(student.birthDate);
+                $('#student-birthplace').val(student.birthPlace);
+                $('#student-address').val(student.address);
+            });
+
+            $('#search-btn').click(function() {
+                const filter = $('#search-input').val();
+                updateTable(filter);
+            });
+
+            $('#sort').click(function() {
+                const sortBy = $('#sort-select').val();
+                if (sortBy) {
+                    students.sort((a, b) => {
+                        if (sortBy === 'name') {
+                            return a.studentName.localeCompare(b.studentName);
+                        } else if (sortBy === 'age') {
+                            return a.age - b.age;
+                        } else if (sortBy === 'birthDate') {
+                            return new Date(a.birthDate) - new Date(b.birthDate);
+                        }
+                        return 0;
+                    });
+                    updateTable(); 
+                }
+            });
+
+            updateTable();
+        });
+    </script>
+</body>
+</html>

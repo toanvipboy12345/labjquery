@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab Interface</title>
+    <style>
+        .tabs {
+            display: flex;
+            cursor: pointer;
+            background-color: #f1f1f1;
+        }
+        .tabs div {
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            background-color: #ccc;
+            margin-right: 5px;
+        }
+        .tabs .active {
+            background-color: #800080;
+            color: white;
+        }
+        .content {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: -1px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="tabs">
+    <div class="tab active" data-content="html">HTML</div>
+    <div class="tab" data-content="css">CSS</div>
+    <div class="tab" data-content="jquery">Jquery</div>
+    <div class="tab" data-content="php">PHP</div>
+</div>
+
+<div class="content">
+    <div class="content-html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum ipsa aliquid sit quidem error justo officia at sint, dolorum maiores, vel expedita harum porro explicabo dolor aliquam, labore facilis magnam.</div>
+    <div class="content-css" style="display:none;">CSS content goes here.</div>
+    <div class="content-jquery" style="display:none;">Jquery content goes here.</div>
+    <div class="content-php" style="display:none;">PHP content goes here.</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // Sự kiện click cho mỗi phần tử có class 'tab'
+        $('.tab').click(function(){
+            // Xóa class 'active' khỏi tất cả các tab để đảm bảo không có tab nào ngoài tab được chọn có trạng thái active
+            $('.tab').removeClass('active');
+    
+            // Thêm class 'active' vào tab vừa được click
+            $(this).addClass('active');
+    
+            // Lấy giá trị của thuộc tính data-content từ tab vừa được click
+            var contentToShow = $(this).data('content');
+    
+            // Ẩn tất cả các nội dung (con của div có class 'content')
+            $('.content > div').hide();
+    
+            // Hiển thị nội dung tương ứng với tab vừa được click bằng cách sử dụng giá trị của data-content
+            $('.content-' + contentToShow).show();
+        });
+    });
+    
+</script>
+
+</body>
+</html>

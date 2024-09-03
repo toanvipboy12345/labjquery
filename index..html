@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .h3{
+        color: rgb(48, 103, 103);
+    }
+</style>
+<body>
+    <h1>Tương tác thông quả thẻ html</h1>
+    <h2 class="h2">Tương tác với thẻ html thông qua class</h2>
+    <h3 id="id">Tương tác với thẻ htmlq ua id</h3>
+    <div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic dolor beatae aspernatur quisquam adipisci nam quasi facere laborum cupiditate, ea harum veniam a sapiente ut nisi, quaerat eius quis nostrum.</p>
+    </div>
+</body>
+<!-- <script src="./js/jquery.js"></script> -->
+
+
+<!-- Cách 2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    //Cách 1
+    $('body').append("<p>siu</p>")
+    $('h1').css('font-size','16px' );
+    $('h1').css('color','red' );
+    //Tương tác với html qua class
+    $('h2').addClass('h3');
+    //Tương tác với html qua id
+    $('id').addClass('h3');
+    $('div>p').css('color','blue');
+</script>
+</html>
